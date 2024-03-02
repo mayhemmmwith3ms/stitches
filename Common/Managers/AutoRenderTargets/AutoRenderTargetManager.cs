@@ -9,104 +9,103 @@ using Terraria;
 using Terraria.ModLoader.Core;
 using Microsoft.Xna.Framework;
 
-namespace StitchesLib.Common.Managers.AutoRenderTargets
+namespace StitchesLib.Common.Managers.AutoRenderTargets;
+
+public class RenderTargetLoader : ILoadable
 {
-	public class RenderTargetLoader : ILoadable
+	public static List<AutoRenderTarget> Targets { get; private set; }
+
+	public void Load(Mod mod)
 	{
-		public static List<AutoRenderTarget> Targets { get; private set; }
+		Targets = new();
 
-		public void Load(Mod mod)
+		Main.QueueMainThreadAction(() =>
 		{
-			Targets = new();
-
-			Main.QueueMainThreadAction(() =>
+			foreach (var t in AssemblyManager.GetLoadableTypes(mod.Code))
 			{
-				foreach (var t in AssemblyManager.GetLoadableTypes(mod.Code))
+				if (!t.IsAbstract && t.IsSubclassOf(typeof(AutoRenderTarget)))
 				{
-					if (!t.IsAbstract && t.IsSubclassOf(typeof(AutoRenderTarget)))
-					{
-						Targets.Add(Activator.CreateInstance(t, null) as AutoRenderTarget);
-					}
+					Targets.Add(Activator.CreateInstance(t, null) as AutoRenderTarget);
 				}
-			});
-
-			On_Main.SetDisplayMode += RefreshTargets;
-			On_Main.CheckMonoliths += DrawOnTargets;
-		}
-
-		public void Unload()
-		{
-			Targets.Clear();
-			Targets = null;
-		}
-
-		private void RefreshTargets(On_Main.orig_SetDisplayMode orig, int width, int height, bool fullscreen)
-		{
-			if (width != Main.screenWidth || height != Main.screenHeight)
-			{
-				Targets.ForEach(t => t.RefreshTarget(width, height));
 			}
+		});
 
-			orig(width, height, fullscreen);
+		On_Main.SetDisplayMode += RefreshTargets;
+		On_Main.CheckMonoliths += DrawOnTargets;
+	}
+
+	public void Unload()
+	{
+		Targets.Clear();
+		Targets = null;
+	}
+
+	private void RefreshTargets(On_Main.orig_SetDisplayMode orig, int width, int height, bool fullscreen)
+	{
+		if (width != Main.screenWidth || height != Main.screenHeight)
+		{
+			Targets.ForEach(t => t.RefreshTarget(width, height));
 		}
 
-		private void DrawOnTargets(On_Main.orig_CheckMonoliths orig)
+		orig(width, height, fullscreen);
+	}
+
+	private void DrawOnTargets(On_Main.orig_CheckMonoliths orig)
+	{
+		if (!Main.gameMenu)
 		{
-			if (!Main.gameMenu)
+			foreach (var e in Main.projectile)
 			{
-				foreach (var e in Main.projectile)
+				if (e.active && e.ModProjectile is IDrawToRenderTarget c)
 				{
-					if (e.active && e.ModProjectile is IDrawToRenderTarget c)
-					{
-						c.QueueDrawAction();
-					}
-				}
-
-				foreach (var e in Main.npc)
-				{
-					if (e.active && e.ModNPC is IDrawToRenderTarget c)
-					{
-						c.QueueDrawAction();
-					}
-				}
-
-				GraphicsDevice gd = Main.graphics.GraphicsDevice;
-
-				foreach (var t in Targets)
-				{
-					Main.spriteBatch.Begin(SpriteSortMode.Immediate, t.BlendStateToDrawOnWith, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-
-					gd.SetRenderTarget(t.renderTarget);
-					gd.Clear(Color.Transparent);
-
-					t.DrawOnTarget();
-
-					Main.spriteBatch.End();
-					gd.SetRenderTarget(null);
+					c.QueueDrawAction();
 				}
 			}
 
-			orig();
-		}
+			foreach (var e in Main.npc)
+			{
+				if (e.active && e.ModNPC is IDrawToRenderTarget c)
+				{
+					c.QueueDrawAction();
+				}
+			}
 
-		public static bool TryGetRenderTarget<T>(out AutoRenderTarget result) where T : AutoRenderTarget
-		{
-			result = GetRenderTarget<T>();
-			if (result is not null)
-				return true;
-			return false;
-		}
+			GraphicsDevice gd = Main.graphics.GraphicsDevice;
 
-		public static T GetRenderTarget<T>() where T : AutoRenderTarget
-		{
 			foreach (var t in Targets)
 			{
-				if (t.GetType() == typeof(T))
-				{
-					return (T)t;
-				}
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, t.BlendStateToDrawOnWith, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+
+				gd.SetRenderTarget(t.renderTarget);
+				gd.Clear(Color.Transparent);
+
+				t.DrawOnTarget();
+
+				Main.spriteBatch.End();
+				gd.SetRenderTarget(null);
 			}
-			return null;
 		}
+
+		orig();
+	}
+
+	public static bool TryGetRenderTarget<T>(out AutoRenderTarget result) where T : AutoRenderTarget
+	{
+		result = GetRenderTarget<T>();
+		if (result is not null)
+			return true;
+		return false;
+	}
+
+	public static T GetRenderTarget<T>() where T : AutoRenderTarget
+	{
+		foreach (var t in Targets)
+		{
+			if (t.GetType() == typeof(T))
+			{
+				return (T)t;
+			}
+		}
+		return null;
 	}
 }

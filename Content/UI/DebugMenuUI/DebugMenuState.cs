@@ -11,36 +11,35 @@ using System.Threading.Tasks;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace StitchesLib.Content.UI.DebugMenuUI
+namespace StitchesLib.Content.UI.DebugMenuUI;
+
+public class DebugMenuState : AutoUIState
 {
-	public class DebugMenuState : AutoUIState
+	public override bool Visible => StitchesConfig.DebugModeActive;
+
+	public UIElement root;
+	public UIImageButtonWithHoverText toggleMenuButton;
+	public DebugMenuMainPanel mainPanel;
+
+	public override void OnInitialize()
 	{
-		public override bool Visible => StitchesConfig.DebugModeActive;
+		root = new();
+		SetBounds(root, 40f, 0f, 20f, 0.3f, 200f, 200f);
+		mainPanel = new();
+		AddElement(root, mainPanel, 0f, 0f, 200f, 200f);
 
-		public UIElement root;
-		public UIImageButtonWithHoverText toggleMenuButton;
-		public DebugMenuMainPanel mainPanel;
+		toggleMenuButton = new(ModContent.Request<Texture2D>(Directories.Textures + "GenericUIButton"), "Toggle Debug Menu");
+		toggleMenuButton.SetHoverImage(ModContent.Request<Texture2D>(Directories.Textures + "GenericUIButtonHighlight"));
+		toggleMenuButton.OnLeftClick += new MouseEvent(ToggleButtonClicked);
+		toggleMenuButton.SetVisibility(1f, 0.8f);
 
-		public override void OnInitialize()
-		{
-			root = new();
-			SetBounds(root, 40f, 0f, 20f, 0.3f, 200f, 200f);
-			mainPanel = new();
-			AddElement(root, mainPanel, 0f, 0f, 200f, 200f);
+		AddElement(root, toggleMenuButton, 20f, 0f, 20f, 0f, 20f, 20f);
 
-			toggleMenuButton = new(ModContent.Request<Texture2D>(Directories.Textures + "GenericUIButton"), "Toggle Debug Menu");
-			toggleMenuButton.SetHoverImage(ModContent.Request<Texture2D>(Directories.Textures + "GenericUIButtonHighlight"));
-			toggleMenuButton.OnLeftClick += new MouseEvent(ToggleButtonClicked);
-			toggleMenuButton.SetVisibility(1f, 0.8f);
+		Append(root);
+	}
 
-			AddElement(root, toggleMenuButton, 20f, 0f, 20f, 0f, 20f, 20f);
-
-			Append(root);
-		}
-
-		private void ToggleButtonClicked(UIMouseEvent evt, UIElement listeningElement)
-		{
-			mainPanel.menuVisible = !mainPanel.menuVisible;
-		}
+	private void ToggleButtonClicked(UIMouseEvent evt, UIElement listeningElement)
+	{
+		mainPanel.menuVisible = !mainPanel.menuVisible;
 	}
 }

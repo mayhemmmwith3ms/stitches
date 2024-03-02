@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StitchesLib.Common.Managers.AutoRenderTargets
+namespace StitchesLib.Common.Managers.AutoRenderTargets;
+
+public interface IDrawToRenderTarget
 {
-	public interface IDrawToRenderTarget
-	{
-		public void QueueDrawAction();
-	}
+	public void QueueDrawAction();
 }

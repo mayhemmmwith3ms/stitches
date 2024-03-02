@@ -9,8 +9,8 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria;
 
-namespace StitchesLib.Common.Managers.AutoUI
-{
+namespace StitchesLib.Common.Managers.AutoUI;
+
     [Autoload(Side = ModSide.Client)]
     public class AutoUILoader : ModSystem
     {
@@ -87,4 +87,3 @@ namespace StitchesLib.Common.Managers.AutoUI
             return null;
         }
     }
-}

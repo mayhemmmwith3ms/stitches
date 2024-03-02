@@ -1,8 +1,7 @@
 using Terraria.ModLoader;
 
-namespace StitchesLib
+namespace StitchesLib;
+
+public class StitchesLib : Mod
 {
-	public class StitchesLib : Mod
-	{
-	}
 }
