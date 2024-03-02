@@ -1,0 +1,3 @@
+displayName = stitches
+author = mayhemmm
+version = 0.1
