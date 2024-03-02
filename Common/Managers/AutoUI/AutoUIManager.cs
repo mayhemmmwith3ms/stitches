@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.ModLoader.Core;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -11,7 +8,7 @@ using Terraria;
 
 namespace StitchesLib.Common.Managers.AutoUI;
 
-    [Autoload(Side = ModSide.Client)]
+[Autoload(Side = ModSide.Client)]
     public class AutoUILoader : ModSystem
     {
         public static List<AutoUIState> UIStates;

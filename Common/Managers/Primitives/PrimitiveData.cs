@@ -3,10 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using StitchesLib.Common.Managers.AutoUI;
 using StitchesLib.Content.UI.DebugMenuUI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace StitchesLib.Common.Managers.Primitives;

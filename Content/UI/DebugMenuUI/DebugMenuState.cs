@@ -2,12 +2,6 @@
 using StitchesLib.Common;
 using StitchesLib.Common.Managers.AutoUI;
 using StitchesLib.Content.Config;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.ModLoader;
 using Terraria.UI;
 

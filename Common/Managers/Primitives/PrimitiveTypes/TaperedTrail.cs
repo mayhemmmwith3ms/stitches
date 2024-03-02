@@ -2,14 +2,12 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using StitchesLib.Common.Utils;
 
 namespace StitchesLib.Common.Managers.Primitives.PrimitiveTypes;
-public class TaperedTrail : IDisposable
+
+public sealed class TaperedTrail : IDisposable
 {
 	public TaperedTrail(int _maxLength, widthFunc _widthFunc, colorFunc _colourFunc)
 	{
