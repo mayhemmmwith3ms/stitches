@@ -1,1 +1,10 @@
-# This file will automatically update with entries for new content after a build and reload
+Configs: {
+	StitchesConfig: {
+		DisplayName: Stitches Config
+
+		DebugMode: {
+			Label: Debug Mode
+			Tooltip: ""
+		}
+	}
+}
