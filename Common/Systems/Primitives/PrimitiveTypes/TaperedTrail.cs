@@ -42,7 +42,7 @@ public sealed class TaperedTrail : IDisposable
 		prim.Render();
 	}
 
-	Primitive.Mesh GenerateMesh()
+	PrimitiveMesh GenerateMesh()
 	{
 		VertexPositionColorTexture[] tempVertices = new VertexPositionColorTexture[(path.Length * 2)];
 		List<short> tempIndices = new();
@@ -99,6 +99,6 @@ public sealed class TaperedTrail : IDisposable
 			tempVertices[v].Position.Y *= zoom.Y;
 		}
 
-		return new Primitive.Mesh(tempVertices, tempIndices.ToArray());
+		return new PrimitiveMesh(tempVertices, tempIndices.ToArray());
 	}
 }

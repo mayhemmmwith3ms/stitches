@@ -41,7 +41,7 @@ public class Primitive : IDisposable
 
 	public Effect effect;
 
-	public Mesh mesh;
+	public PrimitiveMesh mesh;
 
 	public bool active = true;
 
@@ -95,17 +95,5 @@ public class Primitive : IDisposable
 				DebugUtils.DrawDebugPixel(new Vector2(x, y));
 			}
 		});*/
-	}
-
-	public struct Mesh
-	{
-		public VertexPositionColorTexture[] _vertices;
-		public short[] _indices;
-
-		public Mesh(VertexPositionColorTexture[] vertices, short[] indices)
-		{
-			_vertices = vertices;
-			_indices = indices;
-		}
 	}
 }
