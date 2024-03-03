@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using Terraria.GameContent.UI.Elements;
 using Terraria;
+using Terraria.GameContent.UI.Elements;
 
 namespace StitchesLib.Content.UI;
 

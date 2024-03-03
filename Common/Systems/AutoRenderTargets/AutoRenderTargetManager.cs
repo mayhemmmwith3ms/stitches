@@ -1,10 +1,10 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using Terraria.ModLoader;
 using Terraria;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
-using Microsoft.Xna.Framework;
 
 namespace StitchesLib.Common.Systems.AutoRenderTargets;
 

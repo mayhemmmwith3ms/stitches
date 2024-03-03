@@ -1,14 +1,14 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using StitchesLib.Common;
 using StitchesLib.Common.Systems.AutoUI;
 using System;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 using Terraria.UI;
-using Terraria;
-using StitchesLib.Common;
+using Terraria.UI.Chat;
 
 namespace StitchesLib.Content.UI.DebugMenuUI;
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Terraria.ModLoader;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace StitchesLib.Common.Systems.Primitives;
 

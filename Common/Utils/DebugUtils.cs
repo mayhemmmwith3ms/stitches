@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Terraria.ModLoader;
-using Terraria;
-using Microsoft.Xna.Framework;
-using StitchesLib.Common.Systems;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
+using StitchesLib.Common.Systems;
+using Terraria;
+using Terraria.ModLoader;
 
 namespace StitchesLib.Common.Utils;
 

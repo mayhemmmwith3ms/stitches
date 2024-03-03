@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using StitchesLib.Common.Utils;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using StitchesLib.Common.Utils;
 
 namespace StitchesLib.Common.Systems.Primitives.PrimitiveWrappers;
 
