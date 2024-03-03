@@ -11,6 +11,8 @@ public class PrimitiveManager : ILoadable
 	public void Load(Mod mod)
 	{
 		On_Main.DoUpdateInWorld += UpdatePrimitives;
+
+		Layers = new();
 	}
 
 	public void Unload()

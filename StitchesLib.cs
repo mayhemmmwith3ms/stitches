@@ -1,8 +1,8 @@
 using StitchesLib.Common.Systems.AutoUI;
 using StitchesLib.Common.Systems.ParticleSystem;
 using StitchesLib.Content.UI.DebugMenuUI;
+using Terraria;
 using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace StitchesLib;
 
@@ -17,15 +17,17 @@ public class StitchesLib : Mod
 
 	public override void Load()
 	{
-		On_UserInterface.Draw += On_UserInterface_Draw;
+		On_Main.CheckMonoliths += On_Main_CheckMonoliths;
 	}
 
-	private void On_UserInterface_Draw(On_UserInterface.orig_Draw orig, UserInterface self, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Microsoft.Xna.Framework.GameTime time)
+	private void On_Main_CheckMonoliths(On_Main.orig_CheckMonoliths orig)
 	{
+		orig();
+
+		AutoUILoader.GetAutoUIState<DebugMenuState>().mainPanel.infoList.Add("Particle Layer Info:");
+
 		ParticleSystem.Layers.ForEach(x =>
 		AutoUILoader.GetAutoUIState<DebugMenuState>().mainPanel.infoList.Add($"{x.name}: {x.particles.Count} particles active")
 		);
-
-		orig(self, spriteBatch, time);
 	}
 }

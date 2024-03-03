@@ -52,17 +52,14 @@ public class DebugMenuMainPanel : UIElement
 
 	public override void Draw(SpriteBatch spriteBatch)
 	{
-		if (!menuVisible)
-			return;
-
-		base.Draw(spriteBatch);
-
 		if (menuVisible)
 		{
-			infoList.Add("Particle Layer Info:");
+			base.Draw(spriteBatch);
 
 			DrawInfoList(spriteBatch);
 		}
+
+		infoList.Clear();
 	}
 
 	public void DrawInfoList(SpriteBatch spriteBatch)
@@ -76,8 +73,6 @@ public class DebugMenuMainPanel : UIElement
 			ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.ItemStack.Value, s, RootRect.TopLeft() + stringPos + offset, Color.White, 0f, Vector2.Zero, Vector2.One);
 			stringPos.Y += 20;
 		}
-
-		infoList.Clear();
 
 		stringPos = new(300, 0);
 

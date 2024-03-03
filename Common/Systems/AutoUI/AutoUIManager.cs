@@ -17,19 +17,7 @@ public class AutoUILoader : ModSystem
 	{
 		UIStates = new();
 
-		foreach (var t in AssemblyManager.GetLoadableTypes(Mod.Code))
-		{
-			if (!t.IsAbstract && t.IsSubclassOf(typeof(AutoUIState)))
-			{
-				var currentUIState = (AutoUIState)Activator.CreateInstance(t, null);
-				//currentUIState.Activate();
-				var ui = new UserInterface();
-				ui.SetState(currentUIState);
-				currentUIState.UI = ui;
-
-				UIStates.Add(currentUIState);
-			}
-		}
+		RegisterAutoUIStateTypes(Mod);
 	}
 
 	public override void Unload()
@@ -68,6 +56,23 @@ public class AutoUILoader : ModSystem
 					},
 					InterfaceScaleType.UI
 					));
+			}
+		}
+	}
+
+	public static void RegisterAutoUIStateTypes(Mod mod)
+	{
+		foreach (var t in AssemblyManager.GetLoadableTypes(mod.Code))
+		{
+			if (!t.IsAbstract && t.IsSubclassOf(typeof(AutoUIState)))
+			{
+				var currentUIState = (AutoUIState)Activator.CreateInstance(t, null);
+				//currentUIState.Activate();
+				var ui = new UserInterface();
+				ui.SetState(currentUIState);
+				currentUIState.UI = ui;
+
+				UIStates.Add(currentUIState);
 			}
 		}
 	}

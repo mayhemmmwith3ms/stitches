@@ -16,16 +16,7 @@ public class AutoRenderTargetManager : ILoadable
 	{
 		Targets = new();
 
-		Main.QueueMainThreadAction(() =>
-		{
-			foreach (var t in AssemblyManager.GetLoadableTypes(mod.Code))
-			{
-				if (!t.IsAbstract && t.IsSubclassOf(typeof(AutoRenderTarget)))
-				{
-					Targets.Add(Activator.CreateInstance(t, null) as AutoRenderTarget);
-				}
-			}
-		});
+		RegisterAutoRenderTargetTypes(mod);
 
 		On_Main.SetDisplayMode += RefreshTargets;
 		On_Main.CheckMonoliths += DrawOnTargets;
@@ -84,6 +75,20 @@ public class AutoRenderTargetManager : ILoadable
 		}
 
 		orig();
+	}
+
+	public static void RegisterAutoRenderTargetTypes(Mod mod)
+	{
+		Main.QueueMainThreadAction(() =>
+		{
+			foreach (var t in AssemblyManager.GetLoadableTypes(mod.Code))
+			{
+				if (!t.IsAbstract && t.IsSubclassOf(typeof(AutoRenderTarget)))
+				{
+					Targets.Add(Activator.CreateInstance(t, null) as AutoRenderTarget);
+				}
+			}
+		});
 	}
 
 	public static bool TryGetRenderTarget<T>(out AutoRenderTarget result) where T : AutoRenderTarget
