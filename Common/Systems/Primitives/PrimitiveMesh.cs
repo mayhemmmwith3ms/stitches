@@ -4,12 +4,12 @@ namespace StitchesLib.Common.Systems.Primitives;
 
 public struct PrimitiveMesh
 {
-	public VertexPositionColorTexture[] _vertices;
-	public short[] _indices;
+	public VertexPositionColorTexture[] vertices;
+	public short[] indices;
 
 	public PrimitiveMesh(VertexPositionColorTexture[] vertices, short[] indices)
 	{
-		_vertices = vertices;
-		_indices = indices;
+		this.vertices = vertices;
+		this.indices = indices;
 	}
 }

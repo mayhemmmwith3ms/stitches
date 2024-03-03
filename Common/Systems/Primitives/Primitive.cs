@@ -11,39 +11,39 @@ public class Primitive : IDisposable
 {
 	public Primitive(int maxVertices, int maxIndices)
 	{
-		device = Main.graphics.GraphicsDevice;
+		_gd = Main.graphics.GraphicsDevice;
 
-		if (device != null)
+		if (_gd != null)
 		{
 			Main.QueueMainThreadAction(() =>
 			{
-				vBuffer = new DynamicVertexBuffer(device, typeof(VertexPositionColorTexture), maxVertices, BufferUsage.None);
-				iBuffer = new DynamicIndexBuffer(device, IndexElementSize.SixteenBits, maxIndices, BufferUsage.None);
+				_vBuffer = new DynamicVertexBuffer(_gd, typeof(VertexPositionColorTexture), maxVertices, BufferUsage.None);
+				_iBuffer = new DynamicIndexBuffer(_gd, IndexElementSize.SixteenBits, maxIndices, BufferUsage.None);
 			});
 		}
 	}
 
 	public void Dispose()
 	{
-		vBuffer.Dispose();
-		iBuffer.Dispose();
+		_vBuffer.Dispose();
+		_iBuffer.Dispose();
 		effect = null;
 	}
-
-	Matrix world = Matrix.CreateTranslation(0, 0, 0);
-	Matrix view = Matrix.CreateLookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-	Matrix projection = Matrix.CreateOrthographic(Main.graphics.GraphicsDevice.Viewport.Width, Main.graphics.GraphicsDevice.Viewport.Height, 0, 1000);
-
-	public GraphicsDevice device;
-
-	private DynamicVertexBuffer vBuffer;
-	public DynamicIndexBuffer iBuffer;
 
 	public Effect effect;
 
 	public PrimitiveMesh mesh;
 
 	public bool active = true;
+
+	private Matrix _world = Matrix.CreateTranslation(0, 0, 0);
+	private Matrix _view = Matrix.CreateLookAt(new Vector3(0, 0, 3), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+	private Matrix _projection = Matrix.CreateOrthographic(Main.graphics.GraphicsDevice.Viewport.Width, Main.graphics.GraphicsDevice.Viewport.Height, 0, 1000);
+
+	private readonly GraphicsDevice _gd;
+
+	private DynamicVertexBuffer _vBuffer;
+	private DynamicIndexBuffer _iBuffer;
 
 	public void Render()
 	{
@@ -55,32 +55,32 @@ public class Primitive : IDisposable
 
 		if (AutoUILoader.GetAutoUIState<DebugMenuState>().mainPanel.visualisePrims) DebugVisualiseVertices();
 
-		device = Main.graphics.GraphicsDevice;
+		//_gd = Main.graphics.GraphicsDevice;
 
 		if (effect is not BasicEffect) //i don't think this actually does anything lol
 		{
-			effect.Parameters["transformMatrix"].SetValue(world * view * projection);
+			effect.Parameters["transformMatrix"].SetValue(_world * _view * _projection);
 		}
 		else
 		{
 			BasicEffect basicEffect = effect as BasicEffect;
-			basicEffect.World = world;
-			basicEffect.View = view;
-			basicEffect.Projection = projection;
+			basicEffect.World = _world;
+			basicEffect.View = _view;
+			basicEffect.Projection = _projection;
 		}
 
-		vBuffer.SetData(0, mesh._vertices, 0, mesh._vertices.Length, VertexPositionColorTexture.VertexDeclaration.VertexStride, SetDataOptions.Discard); //haha! i dont remember how any of this works
-		iBuffer.SetData(0, mesh._indices, 0, mesh._indices.Length, SetDataOptions.Discard);
+		_vBuffer.SetData(0, mesh.vertices, 0, mesh.vertices.Length, VertexPositionColorTexture.VertexDeclaration.VertexStride, SetDataOptions.Discard); //haha! i dont remember how any of this works
+		_iBuffer.SetData(0, mesh.indices, 0, mesh.indices.Length, SetDataOptions.Discard);
 
-		device.SetVertexBuffer(vBuffer);
-		device.Indices = iBuffer;
+		_gd.SetVertexBuffer(_vBuffer);
+		_gd.Indices = _iBuffer;
 
-		device.RasterizerState = new RasterizerState { CullMode = CullMode.None /*TODO fix sword trail breakage*/};
+		_gd.RasterizerState = new RasterizerState { CullMode = CullMode.None /*TODO fix sword trail breakage*/};
 
 		foreach (EffectPass pass in effect.CurrentTechnique.Passes)
 		{
 			pass.Apply();
-			device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, vBuffer.VertexCount, 0, iBuffer.IndexCount / 3);
+			_gd.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, _vBuffer.VertexCount, 0, _iBuffer.IndexCount / 3);
 		}
 	}
 

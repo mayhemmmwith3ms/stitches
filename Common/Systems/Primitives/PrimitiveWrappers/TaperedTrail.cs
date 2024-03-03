@@ -9,45 +9,45 @@ namespace StitchesLib.Common.Systems.Primitives.PrimitiveWrappers;
 
 public sealed class TaperedTrail : IDisposable
 {
-	public TaperedTrail(int _maxLength, widthFunc _widthFunc, colorFunc _colourFunc)
+	public TaperedTrail(int maxLength, widthFunc widthFunc, colorFunc colourFunc)
 	{
-		prim = new Primitive(_maxLength * 2, 6 * (_maxLength - 1));
+		_primitive = new Primitive(maxLength * 2, 6 * (maxLength - 1));
 
-		path = new Vector2[_maxLength];
+		PathPoints = new Vector2[maxLength];
 
-		width = _widthFunc;
-		color = _colourFunc;
+		width = widthFunc;
+		color = colourFunc;
 	}
 
 	public void Dispose()
 	{
-		prim.active = false;
+		_primitive.active = false;
 	}
-
-	public Effect Effect { get => prim.effect; set => prim.effect = value; }
-
-	public Primitive prim;
-
-	public Vector2[] path;
 
 	public delegate float widthFunc(float progress);
 	public delegate Color colorFunc(Vector2 texCoord);
 
+	public Effect Effect { get => _primitive.effect; set => _primitive.effect = value; }
+
+	public Vector2[] PathPoints { get; set; }
+
 	public widthFunc width;
 	public colorFunc color;
 
+	private readonly Primitive _primitive;
+
 	public void Render()
 	{
-		prim.mesh = GenerateMesh();
-		prim.Render();
+		_primitive.mesh = GenerateMesh();
+		_primitive.Render();
 	}
 
 	PrimitiveMesh GenerateMesh()
 	{
-		VertexPositionColorTexture[] tempVertices = new VertexPositionColorTexture[(path.Length * 2)];
+		VertexPositionColorTexture[] tempVertices = new VertexPositionColorTexture[(PathPoints.Length * 2)];
 		List<short> tempIndices = new();
 
-		int length = path.Length;
+		int length = PathPoints.Length;
 
 		for (int t = 0; t < length; t++)
 		{
@@ -55,16 +55,16 @@ public sealed class TaperedTrail : IDisposable
 
 			float segmentWidth = width?.Invoke(trailProgress) ?? 12;
 
-			Vector2 toNextPoint = t == length - 1 ? path[t] - path[t - 1] : path[t + 1] - path[t];
-			Vector2 toLastPoint = t == 0 ? path[t + 1] - path[t] : path[t] - path[t - 1];
+			Vector2 toNextPoint = t == length - 1 ? PathPoints[t] - PathPoints[t - 1] : PathPoints[t + 1] - PathPoints[t];
+			Vector2 toLastPoint = t == 0 ? PathPoints[t + 1] - PathPoints[t] : PathPoints[t] - PathPoints[t - 1];
 
 			Vector2 perpendicularToNextPoint = toNextPoint.SafeNormalize(Vector2.Zero).RotatedBy(-MathHelper.PiOver2);
 			Vector2 perpendicularToLastPoint = toLastPoint.SafeNormalize(Vector2.Zero).RotatedBy(-MathHelper.PiOver2);
 
 			Vector2 avgFirstLast = Vector2.Normalize((perpendicularToNextPoint + perpendicularToLastPoint) / 2);
 
-			Vector2 top = path[t] + avgFirstLast * segmentWidth;
-			Vector2 bottom = path[t] - avgFirstLast * segmentWidth;
+			Vector2 top = PathPoints[t] + avgFirstLast * segmentWidth;
+			Vector2 bottom = PathPoints[t] - avgFirstLast * segmentWidth;
 			Vector2 topTexCoord = new(trailProgress, 0);
 			Vector2 bottomTexCoord = new(trailProgress, 1);
 

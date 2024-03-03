@@ -14,8 +14,6 @@ public class PrimitiveDrawLayer
 
 	public string name;
 
-	public RenderTarget2D renderTargetToDrawTo = null;
-
 	public List<Action> drawFuncs = new();
 
 	public void Add(Action func)
@@ -29,19 +27,9 @@ public class PrimitiveDrawLayer
 
 		gd.BlendState = BlendState.AlphaBlend;
 
-		if (renderTargetToDrawTo is not null)
-		{
-			gd.SetRenderTarget(renderTargetToDrawTo); // OH BOY I HOPE THIS WORKS
-		}
-
 		foreach (Action func in drawFuncs)
 		{
 			func?.Invoke();
-		}
-
-		if (renderTargetToDrawTo is not null)
-		{
-			gd.SetRenderTarget(null);
 		}
 	}
 }
