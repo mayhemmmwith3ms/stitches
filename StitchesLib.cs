@@ -1,6 +1,5 @@
 using StitchesLib.Common.Systems.AutoUI;
 using StitchesLib.Common.Systems.ParticleSystem;
-using StitchesLib.Common.Systems.Primitives;
 using StitchesLib.Content.UI.DebugMenuUI;
 using Terraria.ModLoader;
 using Terraria.UI;
