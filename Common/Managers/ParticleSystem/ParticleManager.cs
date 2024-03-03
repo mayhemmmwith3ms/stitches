@@ -1,21 +1,28 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using Terraria.ModLoader;
 
 namespace StitchesLib.Common.Managers.ParticleSystem;
 
-public class ParticleManager
+public class ParticleManager : ILoadable
 {
-	public List<ParticleLayer> layers = new();
+	public static List<ParticleLayer> Layers { get; private set; }
 
-	public void DrawAll()
+	public void Load(Mod mod)
 	{
-		layers.ForEach(x => x.DrawAll());
+		Layers = new();
 	}
 
-	public ParticleLayer GetDrawLayer(string name) => layers.Find(x => x.name == name);
+	public void Unload()
+	{
+		Layers.Clear();
+		Layers = null;
+	}
 
-	public bool TryGetDrawLayer(string name, out ParticleLayer layer)
+	public static ParticleLayer GetDrawLayer(string name) => Layers.Find(x => x.name == name);
+
+	public static bool TryGetDrawLayer(string name, out ParticleLayer layer)
 	{
 		layer = GetDrawLayer(name);
 
@@ -27,36 +34,8 @@ public class ParticleManager
 		return true;
 	}
 
-	public class ParticleLayer
+	public static void DrawAll()
 	{
-		public ParticleLayer(string name)
-		{
-			this.name = name;
-			particles = new();
-		}
-
-		public string name;
-
-		public List<Particle> particles;
-
-		public T NewParticle<T>(Vector2 position, Vector2 velocity, int lifetime, Color color) where T : Particle
-		{
-			T p = (T)Activator.CreateInstance(typeof(T));
-			p.position = position;
-			p.velocity = velocity;
-			p.lifetime = lifetime;
-			p.color = color;
-			p.OnSpawn();
-			particles.Add(p);
-			return p;
-		}
-
-		public void DrawAll()
-		{
-			particles.RemoveAll(x => !x.active);
-
-			particles.ForEach(x => x.Update());
-			particles.ForEach(x => x.Draw());
-		}
+		Layers.ForEach(x => x.DrawAll());
 	}
 }

@@ -4,13 +4,19 @@ using Terraria;
 
 namespace StitchesLib.Common.Managers.Primitives;
 
-public class PrimitiveRenderer
+public class PrimitiveRenderer : ILoadable
 {
-	public List<PrimitiveDrawLayer> layers = new();
+	public static List<PrimitiveDrawLayer> Layers { get; private set; }
 
 	public void Load(Mod mod)
 	{
 		On_Main.DoUpdateInWorld += UpdatePrimitives;
+	}
+
+	public void Unload()
+	{
+		Layers.Clear();
+		Layers = null;
 	}
 
 	private void UpdatePrimitives(On_Main.orig_DoUpdateInWorld orig, Main self, System.Diagnostics.Stopwatch sw)
@@ -20,7 +26,7 @@ public class PrimitiveRenderer
 		if (Main.gameMenu)
 			return;
 
-		layers.ForEach(l => l.drawFuncs.Clear());
+		Layers.ForEach(l => l.drawFuncs.Clear());
 
 		foreach (var e in Main.projectile)
 		{
@@ -39,12 +45,7 @@ public class PrimitiveRenderer
 		}
 	}
 
-	public void UnloadDrawLayers()
-	{
-		layers.Clear();
-	}
-
-	public bool TryGetDrawLayer(string name, out PrimitiveDrawLayer layer)
+	public static bool TryGetDrawLayer(string name, out PrimitiveDrawLayer layer)
 	{
 		layer = GetDrawLayer(name);
 
@@ -56,5 +57,5 @@ public class PrimitiveRenderer
 		return true;
 	}
 
-	public PrimitiveDrawLayer GetDrawLayer(string name) => layers.Find(x => x.name == name);
+	public static PrimitiveDrawLayer GetDrawLayer(string name) => Layers.Find(x => x.name == name);
 }
