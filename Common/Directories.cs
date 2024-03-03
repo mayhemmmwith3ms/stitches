@@ -8,4 +8,7 @@ public static class Directories
 	public const string Assets = $"{Mod}/Assets/";
 
 	public const string Textures = $"{Assets}Textures/";
+
+	public const string Textures_DebugPixel = $"{Textures}DebugPixel";
+	public const string Textures_Empty = $"{Textures}Empty";
 }
