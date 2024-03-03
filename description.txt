@@ -1,1 +1,1 @@
-stitches is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+a general purpose library mod for terraria, made so i dont have to keep porting systems between mods 
