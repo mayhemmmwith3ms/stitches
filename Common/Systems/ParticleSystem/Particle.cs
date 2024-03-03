@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 
-namespace StitchesLib.Common.Managers.ParticleSystem;
+namespace StitchesLib.Common.Systems.ParticleSystem;
 public abstract class Particle : IDisposable
 {
 	public Color color;

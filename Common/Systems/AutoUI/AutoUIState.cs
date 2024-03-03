@@ -1,6 +1,6 @@
 ﻿using Terraria.UI;
 
-namespace StitchesLib.Common.Managers.AutoUI;
+namespace StitchesLib.Common.Systems.AutoUI;
 
 public abstract class AutoUIState : UIState
 {

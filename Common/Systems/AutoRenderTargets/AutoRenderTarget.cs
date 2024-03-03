@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
-namespace StitchesLib.Common.Managers.AutoRenderTargets;
+namespace StitchesLib.Common.Systems.AutoRenderTargets;
 
 public class AutoRenderTarget // thanks orange
 {

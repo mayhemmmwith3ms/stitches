@@ -1,4 +1,4 @@
-﻿namespace StitchesLib.Common.Managers.Primitives;
+﻿namespace StitchesLib.Common.Systems.Primitives;
 
 public interface IDrawPrimitive
 {

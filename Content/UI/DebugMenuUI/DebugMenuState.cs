@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using StitchesLib.Common;
-using StitchesLib.Common.Managers.AutoUI;
+using StitchesLib.Common.Systems.AutoUI;
 using StitchesLib.Content.Config;
 using Terraria.ModLoader;
 using Terraria.UI;

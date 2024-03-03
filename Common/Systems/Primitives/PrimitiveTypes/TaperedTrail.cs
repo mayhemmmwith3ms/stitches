@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Terraria;
 using StitchesLib.Common.Utils;
 
-namespace StitchesLib.Common.Managers.Primitives.PrimitiveTypes;
+namespace StitchesLib.Common.Systems.Primitives.PrimitiveTypes;
 
 public sealed class TaperedTrail : IDisposable
 {

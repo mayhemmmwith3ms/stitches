@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StitchesLib.Common.Managers.AutoUI;
+using StitchesLib.Common.Systems.AutoUI;
 using StitchesLib.Content.UI.DebugMenuUI;
 using System;
 using Terraria;
 
-namespace StitchesLib.Common.Managers.Primitives;
+namespace StitchesLib.Common.Systems.Primitives;
 
 public class Primitive : IDisposable
 {

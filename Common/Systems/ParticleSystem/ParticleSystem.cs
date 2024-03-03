@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using Terraria.ModLoader;
 
-namespace StitchesLib.Common.Managers.ParticleSystem;
+namespace StitchesLib.Common.Systems.ParticleSystem;
 
-public class ParticleManager : ILoadable
+public class ParticleSystem : ILoadable
 {
 	public static List<ParticleLayer> Layers { get; private set; }
 

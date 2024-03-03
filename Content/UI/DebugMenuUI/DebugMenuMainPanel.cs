@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using StitchesLib.Common.Managers.AutoUI;
+using StitchesLib.Common.Systems.AutoUI;
 using System;
 using System.Collections.Generic;
 using Terraria.GameContent;
@@ -15,11 +15,14 @@ namespace StitchesLib.Content.UI.DebugMenuUI;
 public class DebugMenuMainPanel : UIElement
 {
 	public List<string> infoList = new();
-	private List<PersistentInfoItem> persistentInfoList = new();
 	public UIImageButtonWithHoverText togglePrimitiveVertsButton;
 
 	public bool menuVisible = false;
 	public bool visualisePrims = false;
+
+	private List<PersistentInfoItem> persistentInfoList = new();
+
+	public Rectangle RootRect => GetInnerDimensions().ToRectangle();
 
 	public override void OnInitialize()
 	{
@@ -54,19 +57,12 @@ public class DebugMenuMainPanel : UIElement
 
 		base.Draw(spriteBatch);
 
-		/*if (menuVisible)
+		if (menuVisible)
 		{
 			infoList.Add("Particle Layer Info:");
 
-			noitarraria.Instance.particleHandler.layers.ForEach(x =>
-			{
-				infoList.Add($"{x.name}: {x.particles.Count} particles active");
-			});
-
 			DrawInfoList(spriteBatch);
 		}
-		//Main.NewText(RootRect.TopLeft());
-		DebugUtils.DrawDebugPixel(RootRect.TopLeft());*/
 	}
 
 	public void DrawInfoList(SpriteBatch spriteBatch)
@@ -109,9 +105,7 @@ public class DebugMenuMainPanel : UIElement
 		persistentInfoList.Insert(0, new(value, key));
 	}
 
-	public Rectangle RootRect => GetInnerDimensions().ToRectangle();
-
-	private class PersistentInfoItem
+	private sealed class PersistentInfoItem
 	{
 		public PersistentInfoItem(object value, string key = "unnamed", int timeTillFade = 600)
 		{

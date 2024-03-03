@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria;
 
-namespace StitchesLib.Common.Managers.AutoUI;
+namespace StitchesLib.Common.Systems.AutoUI;
 
 [Autoload(Side = ModSide.Client)]
     public class AutoUILoader : ModSystem

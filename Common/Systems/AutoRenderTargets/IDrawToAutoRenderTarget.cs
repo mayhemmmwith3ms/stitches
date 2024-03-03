@@ -1,4 +1,4 @@
-﻿namespace StitchesLib.Common.Managers.AutoRenderTargets;
+﻿namespace StitchesLib.Common.Systems.AutoRenderTargets;
 
 public interface IDrawToRenderTarget
 {

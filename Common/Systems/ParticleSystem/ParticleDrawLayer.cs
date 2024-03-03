@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StitchesLib.Common.Managers.ParticleSystem;
+namespace StitchesLib.Common.Systems.ParticleSystem;
 
 public class ParticleLayer
 {

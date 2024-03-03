@@ -2,9 +2,9 @@
 using Terraria.ModLoader;
 using Terraria;
 
-namespace StitchesLib.Common.Managers.Primitives;
+namespace StitchesLib.Common.Systems.Primitives;
 
-public class PrimitiveRenderer : ILoadable
+public class PrimitiveManager : ILoadable
 {
 	public static List<PrimitiveDrawLayer> Layers { get; private set; }
 

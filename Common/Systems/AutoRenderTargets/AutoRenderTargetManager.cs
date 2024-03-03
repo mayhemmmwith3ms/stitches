@@ -6,9 +6,9 @@ using Terraria;
 using Terraria.ModLoader.Core;
 using Microsoft.Xna.Framework;
 
-namespace StitchesLib.Common.Managers.AutoRenderTargets;
+namespace StitchesLib.Common.Systems.AutoRenderTargets;
 
-public class RenderTargetLoader : ILoadable
+public class AutoRenderTargetManager : ILoadable
 {
 	public static List<AutoRenderTarget> Targets { get; private set; }
 

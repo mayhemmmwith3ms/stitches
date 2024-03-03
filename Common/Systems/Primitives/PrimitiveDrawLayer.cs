@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 
-namespace StitchesLib.Common.Managers.Primitives;
+namespace StitchesLib.Common.Systems.Primitives;
 
 public class PrimitiveDrawLayer
 {
