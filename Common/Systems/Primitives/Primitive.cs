@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StitchesLib.Common.Systems.AutoUI;
+using StitchesLib.Common.Utils;
 using StitchesLib.Content.UI.DebugMenuUI;
 using System;
 using Terraria;
@@ -86,14 +87,14 @@ public class Primitive : IDisposable
 
 	private void DebugVisualiseVertices()
 	{
-		/*MiscDrawManager.debugDrawCalls.Add(() =>
+		DebugDrawManager.DebugDrawQueue.Add(() =>
 		{
-			for (int i = 0; i < mesh._vertices.Length; i++)
+			for (int i = 0; i < mesh.vertices.Length; i++)
 			{
-				float x = mesh._vertices[i].Position.X + Main.screenPosition.X + Main.graphics.GraphicsDevice.Viewport.Width / 2;
-				float y = -mesh._vertices[i].Position.Y + Main.screenPosition.Y + Main.graphics.GraphicsDevice.Viewport.Height / 2;
+				float x = mesh.vertices[i].Position.X + Main.screenPosition.X + Main.graphics.GraphicsDevice.Viewport.Width / 2;
+				float y = -mesh.vertices[i].Position.Y + Main.screenPosition.Y + Main.graphics.GraphicsDevice.Viewport.Height / 2;
 				DebugUtils.DrawDebugPixel(new Vector2(x, y));
 			}
-		});*/
+		});
 	}
 }
