@@ -11,4 +11,6 @@ public static class Directories
 
 	public const string Textures_DebugPixel = $"{Textures}DebugPixel";
 	public const string Textures_Empty = $"{Textures}Empty";
+
+	public const string Effects = $"{Assets}Effects/";
 }

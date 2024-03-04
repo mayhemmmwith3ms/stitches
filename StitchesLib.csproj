@@ -8,6 +8,7 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Effects\DrawOnTilesEffect.fx" />
     <None Remove="Assets\Textures\DebugPixel.png" />
     <None Remove="Assets\Textures\Empty.png" />
     <None Remove="Assets\Textures\GenericUIButton.png" />

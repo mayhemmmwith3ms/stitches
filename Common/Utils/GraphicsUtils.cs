@@ -4,7 +4,7 @@ using Terraria;
 namespace StitchesLib.Common.Utils;
 public static class GraphicsUtils
 {
-	public static readonly Rectangle screenRect = new(0, 0, Main.screenWidth, Main.screenHeight);
+	public static Rectangle ScreenRect => new(0, 0, Main.screenWidth, Main.screenHeight);
 
 	public static Vector2 WorldToZeroCenteredScreenPos(this Vector2 worldPos)
 	{
