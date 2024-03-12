@@ -1,4 +1,5 @@
 sampler uImage0 : register(s0);
+sampler uImage1 : register(s1);
 
 texture tileTexture;
 sampler2D tileImage = sampler_state { texture = <tileTexture>; magfilter = LINEAR; minfilter = LINEAR; mipfilter = LINEAR; AddressU = wrap; AddressV = wrap; };
@@ -9,7 +10,7 @@ float4 DrawOnTiles(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COL
 
     float4 tileColor = tex2D(tileImage, coords);
 
-    color *= color * tileColor.a;
+    color *= tileColor.a;
 
     return color;
 }
